@@ -23,8 +23,9 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     private Button playButton;
     private Button preButton;
     private Button nextButton;
-    private Button pauseButton;
     private Button loopButton;
+    private static final String PLAY = "Play";
+    private static final String PAUSE = "Pause";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,6 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         playButton.setOnClickListener(this);
         nextButton.setOnClickListener(this);
         preButton.setOnClickListener(this);
-        pauseButton.setOnClickListener(this);
         loopButton.setOnClickListener(this);
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnPreparedListener(this);
@@ -76,7 +76,6 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         playButton = (Button) findViewById(R.id.play_btn);
         nextButton = (Button) findViewById(R.id.next_btn);
         preButton = (Button) findViewById(R.id.previous_btn);
-        pauseButton = (Button) findViewById(R.id.pause_btn);
         loopButton = (Button) findViewById(R.id.loop_btn);
     }
 
@@ -101,13 +100,9 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
             case R.id.previous_btn:
                 playPrevious(cursor);
                 break;
-            case R.id.pause_btn:
-                playPause();
-                break;
             case R.id.loop_btn:
                 playLoop();
                 break;
-
         }
     }
 
@@ -121,6 +116,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     private void playPause() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
+            playButton.setText(PLAY);
         } else {
             Toast.makeText(MediaPlayerActivity.this, "The mediaPlayer is not playing!", Toast.LENGTH_SHORT).show();
         }
@@ -159,6 +155,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
+                playButton.setText(PAUSE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,15 +166,20 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     private void play(Cursor cursor) {
 //                String urlString = "http://music.baidutt.com/up/kwcackwa/cmypus.mp3";
 //                mediaPlayer.setDataSource(urlString);
-
-        int totalDuration = mediaPlayer.getDuration();
-        if (totalDuration != -1) {
-            int currentPosition = mediaPlayer.getCurrentPosition();
-            if (currentPosition > 0 && currentPosition < totalDuration) {
-                mediaPlayer.start();
-            } else {
-                playNewAudio(cursor);//initialized and prepared and start
+        //需要判断datasource是否存在
+        if(!mediaPlayer.isPlaying()){
+            int totalDuration = mediaPlayer.getDuration();
+            if (totalDuration != -1) {
+                int currentPosition = mediaPlayer.getCurrentPosition();
+                if (currentPosition > 0 && currentPosition < totalDuration) {
+                    mediaPlayer.start();
+                    playButton.setText(PAUSE);
+                } else {
+                    playNewAudio(cursor);//initialized and prepared and start
+                }
             }
+        }else{
+            playPause();
         }
     }
 
