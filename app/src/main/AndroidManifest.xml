@@ -21,7 +21,7 @@
         </activity>
 
         <service
-            android:name=".AudioPlayerService"
+            android:name=".MediaPlayerService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
