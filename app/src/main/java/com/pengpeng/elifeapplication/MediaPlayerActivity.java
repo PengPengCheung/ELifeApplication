@@ -28,26 +28,21 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
     private Intent intent;
-    UpdateSeekbarThread thread = new UpdateSeekbarThread();
-     Handler handler = new Handler() {
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    int totalTime = audioPlayer.getDuration();
-                    int currentTime = audioPlayer.getCurrentPosition();
-                    int seekBarMax = seekBar.getMax();
-                    Log.e("Progress: ", totalTime+" "+currentTime+" "+seekBarMax);
-//                    if(currentTime == totalTime){
-//                        try {
-//                            thread.wait();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-                    if (totalTime > 0 && currentTime > 0 && seekBarMax > 0) {
-                        Log.i("Progress: ", String.valueOf(seekBar.getProgress()));
-                        seekBar.setProgress((int)(seekBarMax * (float)currentTime / totalTime));
+                    if (audioPlayer != null && audioPlayer.isPrepared()) {
+                        int totalTime = audioPlayer.getDuration();
+                        int currentTime = audioPlayer.getCurrentPosition();
+                        int seekBarMax = seekBar.getMax();
+                        Log.e("Progress: ", totalTime + " " + currentTime + " " + seekBarMax);
+                        if (totalTime > 0 && currentTime > 0 && seekBarMax > 0) {
+                            Log.i("Progress: ", String.valueOf(seekBar.getProgress()));
+                            seekBar.setProgress((int) (seekBarMax * (float) currentTime / totalTime));
+                        }
                     }
                     break;
             }
@@ -62,12 +57,15 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         initView();
         cursor = getCursor();
         setListener();
+        UpdateSeekBarThread thread = new UpdateSeekBarThread();
+        thread.start();
+
     }
 
     private Cursor getCursor() {
         ContentResolver contentResolver = getContentResolver();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Log.i(TAG + " EXTCON_URI", uri.toString());
+        Log.i(TAG + " EXT_CON_URI", uri.toString());
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
         if (cursor == null) {
             Log.i(TAG, "--->Query failed!");
@@ -86,6 +84,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         nextButton.setOnClickListener(this);
         preButton.setOnClickListener(this);
         loopButton.setOnClickListener(this);
+        audioPlayer.getMediaPlayer().setOnCompletionListener(this);
         seekBar.setOnSeekBarChangeListener(new ProgressBarListener());
     }
 
@@ -101,35 +100,35 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     protected void onDestroy() {
         audioPlayer.release();
         Log.i(TAG + " onStop", audioPlayer.toString());
+        audioPlayer = null;
         cursor.close();
         stopService(intent);
         super.onDestroy();
     }
 
-    public class UpdateSeekbarThread extends Thread {
+    public class UpdateSeekBarThread extends Thread {
         @Override
         public void run() {
-            while (true) {
+            while (audioPlayer != null) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 handler.sendEmptyMessage(0);
             }
+
         }
     }
 
     @Override
     public void onClick(View view) {
-        thread.start();
         switch (view.getId()) {
             case R.id.play_btn:
-                audioPlayer.play(cursor);
-                Log.i("Progressbar ", String.valueOf(seekBar.getMax()));
                 if (PLAY.equals(playButton.getText())) {
+                    audioPlayer.play(cursor);
                     playButton.setText(PAUSE);
-                } else if(PAUSE.equals(playButton.getText())){
+                } else if (PAUSE.equals(playButton.getText())) {
                     audioPlayer.playPause();
                     playButton.setText(PLAY);
                 }
@@ -150,9 +149,6 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
                 audioPlayer.playLoop();
                 break;
         }
-//        if(!thread.isAlive()){
-//            thread.notify();
-//        }
         intent = new Intent(MediaPlayerActivity.this, MediaPlayerService.class);
         intent.putExtra("songName", audioPlayer.getCurrentAudioTitle(cursor));
         startService(intent);
@@ -167,10 +163,15 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
 
     private class ProgressBarListener implements SeekBar.OnSeekBarChangeListener {
 
+        /*
+        * 这里的progress参数指的是相对于seekBar来说的progress，而不是音频的progress
+        * seekBar默认是的最大值是100,如果改成音频的大小，那么这里的progress参数就是音频的progress
+        * */
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (fromUser == true) {
-                audioPlayer.seekTo(progress);
+            if (fromUser) {
+                audioPlayer.seekTo((int) (audioPlayer.getDuration() * (float) progress / seekBar.getMax()));
+                seekBar.setProgress(progress);
             }
         }
 

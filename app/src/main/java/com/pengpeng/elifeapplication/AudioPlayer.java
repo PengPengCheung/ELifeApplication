@@ -35,6 +35,10 @@ public class AudioPlayer {
         return this.paused;
     }
 
+    public MediaPlayer getMediaPlayer(){
+        return this.mediaPlayer;
+    }
+
     public int getDuration() {
         if (mediaPlayer != null) {
             return mediaPlayer.getDuration();
@@ -154,6 +158,7 @@ public class AudioPlayer {
         }else{
             playPrepared(cursor);
             start();
+            paused = false;
         }
     }
     
