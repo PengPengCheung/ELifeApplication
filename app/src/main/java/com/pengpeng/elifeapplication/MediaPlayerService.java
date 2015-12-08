@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class MediaPlayerService extends Service implements MediaPlayer.OnPreparedListener {
-    private AudioPlayer audioPlayer = new AudioPlayer(this);
+    private LocalAudioPlayer localAudioPlayer = new LocalAudioPlayer(this);
     public static final int NOTIFICATION_ID = 1;
 
 

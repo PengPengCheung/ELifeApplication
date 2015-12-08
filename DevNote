@@ -1,0 +1,3 @@
+1、如果想要点击notification之后跳转到当前正在运行的这个activity中，在manifest.xml文件中找到对应的activity，加上android:launchMode="singleTask"属性即可
+2、控制进度条更新的线程在activity刚刚create的时候就开启
+3、MediaPlayer只能对当前的音频设置循环，不能对所有的音频设置循环，而且跳到下一首的时候需要重新设定，返回上一首的时候循环也需要重新设定

@@ -1,0 +1,2 @@
+1、如果想要点击notification之后跳转到当前正在运行的这个activity中，在manifest.xml文件中找到对应的activity，加上android:launchMode="singleTask"属性即可
+2、控制进度条更新的线程在activity刚刚create的时候就开启

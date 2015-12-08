@@ -14,17 +14,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
-
+/*
+* 1、前台的服务点击进去之后跳转到activity，但不重新create (fixed)
+* 2、重构AudioPlayer，改为继承MediaPlayer (solved)
+* 3、进度条两端增加时间 (solved)
+* 4、基本完成本地音频播放，构建播放网络音频的类
+* 5、尝试连接前后端
+* */
 public class MediaPlayerActivity extends ActionBarActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = "MediaPlayer";
-    private AudioPlayer audioPlayer = new AudioPlayer(MediaPlayerActivity.this);
+    private LocalAudioPlayer localAudioPlayer = new LocalAudioPlayer(MediaPlayerActivity.this);
     private Cursor cursor;
     private Button playButton;
     private Button preButton;
     private Button nextButton;
     private Button loopButton;
     private SeekBar seekBar;
+    private TextView startTimeText;
+    private TextView endTimeText;
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
     private Intent intent;
@@ -34,13 +43,14 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    if (audioPlayer != null && audioPlayer.isPrepared()) {
-                        int totalTime = audioPlayer.getDuration();
-                        int currentTime = audioPlayer.getCurrentPosition();
+                    if (localAudioPlayer != null && localAudioPlayer.isPrepared()) {
+                        int totalTime = localAudioPlayer.getDuration();
+                        int currentTime = localAudioPlayer.getCurrentPosition();
                         int seekBarMax = seekBar.getMax();
                         Log.e("Progress: ", totalTime + " " + currentTime + " " + seekBarMax);
                         if (totalTime > 0 && currentTime > 0 && seekBarMax > 0) {
                             Log.i("Progress: ", String.valueOf(seekBar.getProgress()));
+                            startTimeText.setText(getTimeText(currentTime));
                             seekBar.setProgress((int) (seekBarMax * (float) currentTime / totalTime));
                         }
                     }
@@ -56,6 +66,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         setContentView(R.layout.mediaplayer_activity);
         initView();
         cursor = getCursor();
+        localAudioPlayer.setCursor(cursor);
         setListener();
         UpdateSeekBarThread thread = new UpdateSeekBarThread();
         thread.start();
@@ -84,7 +95,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         nextButton.setOnClickListener(this);
         preButton.setOnClickListener(this);
         loopButton.setOnClickListener(this);
-        audioPlayer.getMediaPlayer().setOnCompletionListener(this);
+        localAudioPlayer.setOnCompletionListener(this);
         seekBar.setOnSeekBarChangeListener(new ProgressBarListener());
     }
 
@@ -94,22 +105,43 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         preButton = (Button) findViewById(R.id.previous_btn);
         loopButton = (Button) findViewById(R.id.loop_btn);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        startTimeText = (TextView) findViewById(R.id.startTime);
+        endTimeText = (TextView) findViewById(R.id.endTime);
     }
 
     @Override
     protected void onDestroy() {
-        audioPlayer.release();
-        Log.i(TAG + " onStop", audioPlayer.toString());
-        audioPlayer = null;
+        localAudioPlayer.release();
+        Log.i(TAG + " onStop", localAudioPlayer.toString());
+        localAudioPlayer = null;
         cursor.close();
-        stopService(intent);
+        if (intent != null) {
+            stopService(intent);
+        }
         super.onDestroy();
+    }
+
+    public String getTimeText(int time) {
+        /*
+        传入的time参数单位为milliseconds，即毫秒
+        这个方法可以将毫秒单位的时间转换为0：00形式的时间
+         */
+        int totalSeconds = time / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        String showTime;
+        if (seconds > 9 && seconds < 60) {
+            showTime = minutes + ":" + seconds;
+        } else {
+            showTime = minutes + ":0" + seconds;
+        }
+        return showTime;
     }
 
     public class UpdateSeekBarThread extends Thread {
         @Override
         public void run() {
-            while (audioPlayer != null) {
+            while (localAudioPlayer != null) {
                 try {
                     Thread.sleep(30);
                 } catch (InterruptedException e) {
@@ -126,31 +158,32 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         switch (view.getId()) {
             case R.id.play_btn:
                 if (PLAY.equals(playButton.getText())) {
-                    audioPlayer.play(cursor);
+                    localAudioPlayer.play();
                     playButton.setText(PAUSE);
                 } else if (PAUSE.equals(playButton.getText())) {
-                    audioPlayer.playPause();
+                    localAudioPlayer.playPause();
                     playButton.setText(PLAY);
                 }
                 break;
             case R.id.next_btn:
-                audioPlayer.playNext(cursor);
+                localAudioPlayer.playNext();
                 if (PLAY.equals(playButton.getText())) {
                     playButton.setText(PAUSE);
                 }
                 break;
             case R.id.previous_btn:
-                audioPlayer.playPrevious(cursor);
+                localAudioPlayer.playPrevious();
                 if (PLAY.equals(playButton.getText())) {
                     playButton.setText(PAUSE);
                 }
                 break;
             case R.id.loop_btn:
-                audioPlayer.playLoop();
+                localAudioPlayer.setLooping(true);
                 break;
         }
+        endTimeText.setText(getTimeText(localAudioPlayer.getDuration()));
         intent = new Intent(MediaPlayerActivity.this, MediaPlayerService.class);
-        intent.putExtra("songName", audioPlayer.getCurrentAudioTitle(cursor));
+        intent.putExtra("songName", localAudioPlayer.getAudioInfo().getCurrentAudioTitle(cursor));
         startService(intent);
     }
 
@@ -170,7 +203,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
-                audioPlayer.seekTo((int) (audioPlayer.getDuration() * (float) progress / seekBar.getMax()));
+                localAudioPlayer.seekTo((int) (localAudioPlayer.getDuration() * (float) progress / seekBar.getMax()));
                 seekBar.setProgress(progress);
             }
         }
