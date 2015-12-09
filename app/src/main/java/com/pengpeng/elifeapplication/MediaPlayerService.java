@@ -32,7 +32,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnPrepare
     public int onStartCommand(Intent intent, int flags, int startId) {
         String songName = intent.getStringExtra("songName");
         Log.i("songName ", songName);
-        Intent openIntent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
+//        Intent openIntent = new Intent(getApplicationContext(), MediaPlayerActivity.class);
+        Intent openIntent = new Intent(getApplicationContext(), NetworkPlayerActivity.class);
         openIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//上一个被打开的活动会被终结掉，实现没有两个相同的活动被同时打开。
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification();

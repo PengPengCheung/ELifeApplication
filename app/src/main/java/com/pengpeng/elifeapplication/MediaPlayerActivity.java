@@ -31,6 +31,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     private Button preButton;
     private Button nextButton;
     private Button loopButton;
+    private Button jumpButton;
     private SeekBar seekBar;
     private TextView startTimeText;
     private TextView endTimeText;
@@ -63,7 +64,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mediaplayer_activity);
+        setContentView(R.layout.local_audio_layout);
         initView();
         cursor = getCursor();
         localAudioPlayer.setCursor(cursor);
@@ -97,6 +98,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         loopButton.setOnClickListener(this);
         localAudioPlayer.setOnCompletionListener(this);
         seekBar.setOnSeekBarChangeListener(new ProgressBarListener());
+        jumpButton.setOnClickListener(this);
     }
 
     private void initView() {
@@ -107,6 +109,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         startTimeText = (TextView) findViewById(R.id.startTime);
         endTimeText = (TextView) findViewById(R.id.endTime);
+        jumpButton = (Button)findViewById(R.id.button);
     }
 
     @Override
@@ -179,6 +182,10 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
                 break;
             case R.id.loop_btn:
                 localAudioPlayer.setLooping(true);
+                break;
+            case R.id.button:
+                Intent intent = new Intent(MediaPlayerActivity.this, NetworkPlayerActivity.class);
+                startActivity(intent);
                 break;
         }
         endTimeText.setText(getTimeText(localAudioPlayer.getDuration()));

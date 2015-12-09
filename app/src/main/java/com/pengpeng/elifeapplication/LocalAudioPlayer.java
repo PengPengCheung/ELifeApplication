@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 public class LocalAudioPlayer extends MediaPlayer implements IAudioPlayer{
     private Context context;
-    private AudioInfo audioInfo;
-    private Cursor cursor;
+    private AudioInfo audioInfo;//本地音频特有
+    private Cursor cursor;//本地音频特有
     private boolean prepared = false;
     private boolean paused = false;
 

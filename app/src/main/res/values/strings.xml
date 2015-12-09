@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ELifeApplication</string>
+    <string name="title_activity_network_player">NetworkPlayerActivity</string>
 </resources>
