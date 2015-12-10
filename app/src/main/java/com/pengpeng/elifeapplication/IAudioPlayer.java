@@ -5,8 +5,6 @@ package com.pengpeng.elifeapplication;
  */
 public interface IAudioPlayer {
 
-    public boolean isPrepared();
-
     public boolean isPaused();
 
     public void playPause();

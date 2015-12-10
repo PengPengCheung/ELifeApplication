@@ -44,7 +44,7 @@ public class MediaPlayerActivity extends ActionBarActivity implements View.OnCli
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    if (localAudioPlayer != null && localAudioPlayer.isPrepared()) {
+                    if (localAudioPlayer != null && localAudioPlayer.isPlaying()) {
                         int totalTime = localAudioPlayer.getDuration();
                         int currentTime = localAudioPlayer.getCurrentPosition();
                         int seekBarMax = seekBar.getMax();

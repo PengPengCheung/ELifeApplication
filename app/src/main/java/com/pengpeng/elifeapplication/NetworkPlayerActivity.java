@@ -38,9 +38,6 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
                         int totalTime = networkAudioPlayer.getDuration();
                         int currentTime = networkAudioPlayer.getCurrentPosition();
                         int seekBarMax = seekBar.getMax();
-//                        if(currentTime == totalTime){
-//                            playButton.setText("Play");
-//                        }
                         Log.e("Progress: ", totalTime + " " + currentTime + " " + seekBarMax);
                         if (totalTime > 0 && currentTime > 0 && seekBarMax > 0) {
                             Log.i("Progress: ", String.valueOf(seekBar.getProgress()));
@@ -159,13 +156,14 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
     public void onPrepared(MediaPlayer mediaPlayer) {
         networkAudioPlayer.start();
         networkAudioPlayer.setPaused(false);
-        networkAudioPlayer.setPrepared(true);
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         playButton.setText(PLAY);
-        Log.i("Completion", networkAudioPlayer.isPaused()+" "+networkAudioPlayer.isPrepared());
+        networkAudioPlayer.play();
+        playButton.setText(PAUSE);
+        Log.i("Completion", networkAudioPlayer.isPaused()+" "+networkAudioPlayer.isPlaying());
     }
 
     private class ProgressBarListener implements SeekBar.OnSeekBarChangeListener {

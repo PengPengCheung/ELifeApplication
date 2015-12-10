@@ -16,7 +16,6 @@ public class LocalAudioPlayer extends MediaPlayer implements IAudioPlayer{
     private Context context;
     private AudioInfo audioInfo;//本地音频特有
     private Cursor cursor;//本地音频特有
-    private boolean prepared = false;
     private boolean paused = false;
 
     public LocalAudioPlayer(Context context) {
@@ -26,10 +25,6 @@ public class LocalAudioPlayer extends MediaPlayer implements IAudioPlayer{
 
     public void setCursor(Cursor cursor){
         this.cursor = cursor;
-    }
-
-    public boolean isPrepared() {
-        return this.prepared;
     }
 
     public boolean isPaused() {
@@ -82,7 +77,6 @@ public class LocalAudioPlayer extends MediaPlayer implements IAudioPlayer{
             setDataSource(context.getApplicationContext(), contentUri);
             setAudioStreamType(AudioManager.STREAM_MUSIC);
             prepare();
-            prepared = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
