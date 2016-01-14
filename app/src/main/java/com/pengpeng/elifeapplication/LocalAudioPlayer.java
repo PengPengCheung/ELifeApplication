@@ -42,6 +42,7 @@ public class LocalAudioPlayer extends MediaPlayer implements IAudioPlayer{
         } else {
             Toast.makeText(context, "The mediaPlayer is not playing!", Toast.LENGTH_SHORT).show();
         }
+//        Type type;
     }
 
     public void playPrevious() {

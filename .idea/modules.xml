@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ELifeApplication.iml" filepath="$PROJECT_DIR$/ELifeApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elifecore/elifecore.iml" filepath="$PROJECT_DIR$/elifecore/elifecore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elifedataapi/elifedataapi.iml" filepath="$PROJECT_DIR$/elifedataapi/elifedataapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elifemodel/elifemodel.iml" filepath="$PROJECT_DIR$/elifemodel/elifemodel.iml" />
     </modules>
   </component>
 </project>

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.pengpeng.elifeapplication.utils.Tools;
+
 
 public class NetworkPlayerActivity extends ActionBarActivity implements View.OnClickListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
 
@@ -28,20 +30,20 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
     private Intent intent;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
                     if (networkAudioPlayer != null && networkAudioPlayer.isPlaying()) {
-                        endTimeText.setText(getTimeText(networkAudioPlayer.getDuration()));
+                        endTimeText.setText(Tools.getTimeText(networkAudioPlayer.getDuration()));
                         int totalTime = networkAudioPlayer.getDuration();
                         int currentTime = networkAudioPlayer.getCurrentPosition();
                         int seekBarMax = seekBar.getMax();
                         Log.e("Progress: ", totalTime + " " + currentTime + " " + seekBarMax);
                         if (totalTime > 0 && currentTime > 0 && seekBarMax > 0) {
                             Log.i("Progress: ", String.valueOf(seekBar.getProgress()));
-                            startTimeText.setText(getTimeText(currentTime));
+                            startTimeText.setText(Tools.getTimeText(currentTime));
                             seekBar.setProgress((int) (seekBarMax * (float) currentTime / totalTime));
                         }
                     }
@@ -56,6 +58,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
         setContentView(R.layout.network_audio_layout);
         initView();
         setListener();
+
         UpdateSeekBarThread thread = new UpdateSeekBarThread();
         thread.start();
     }
@@ -72,7 +75,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
     }
 
     private void initView() {
-        playButton = (Button)findViewById(R.id.play_btn);
+        playButton = (Button) findViewById(R.id.play_btn);
         nextButton = (Button) findViewById(R.id.next_btn);
         preButton = (Button) findViewById(R.id.previous_btn);
         loopButton = (Button) findViewById(R.id.loop_btn);
@@ -81,7 +84,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
         endTimeText = (TextView) findViewById(R.id.endTime);
     }
 
-    private void setListener(){
+    private void setListener() {
         playButton.setOnClickListener(this);
         networkAudioPlayer.setOnPreparedListener(this);
         nextButton.setOnClickListener(this);
@@ -93,7 +96,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.play_btn:
                 if (PLAY.equals(playButton.getText())) {
                     networkAudioPlayer.play();
@@ -135,22 +138,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
         }
     }
 
-    public String getTimeText(int time) {
-        /*
-        传入的time参数单位为milliseconds，即毫秒
-        这个方法可以将毫秒单位的时间转换为0：00形式的时间
-         */
-        int totalSeconds = time / 1000;
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-        String showTime;
-        if (seconds > 9 && seconds < 60) {
-            showTime = minutes + ":" + seconds;
-        } else {
-            showTime = minutes + ":0" + seconds;
-        }
-        return showTime;
-    }
+
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
@@ -163,7 +151,7 @@ public class NetworkPlayerActivity extends ActionBarActivity implements View.OnC
         playButton.setText(PLAY);
         networkAudioPlayer.play();
         playButton.setText(PAUSE);
-        Log.i("Completion", networkAudioPlayer.isPaused()+" "+networkAudioPlayer.isPlaying());
+        Log.i("Completion", networkAudioPlayer.isPaused() + " " + networkAudioPlayer.isPlaying());
     }
 
     private class ProgressBarListener implements SeekBar.OnSeekBarChangeListener {
