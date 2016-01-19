@@ -4,21 +4,21 @@
     android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".utils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".utils.MyApplication"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".NetworkPlayerActivity"
+            android:name=".newactivities.NetworkAudioPlayerActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,13 @@
         </activity>
 
         <service
-            android:name=".MediaPlayerService"
+            android:name=".oldactivities.MediaPlayerService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity
+            android:name=".newactivities.AudioListActivity"
+            android:label="@string/title_activity_audio_list"></activity>
     </application>
 
-</manifest>
-        <!--        <activity            android:name=".NetworkPlayerActivity"            android:label="@string/title_activity_network_player"></activity></application></manifest> -->
+</manifest> <!-- <activity            android:name=".NetworkPlayerActivity"            android:label="@string/title_activity_network_player"></activity></application></manifest> -->

@@ -1,5 +1,8 @@
 package com.pengpeng.elifemodel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by pengpeng on 16-1-12.
  */
@@ -10,7 +13,7 @@ public class Audio extends EModel{
     private String audioDate;       //音频发布日期
     private String audioUrl;        //音频资源url，来自服务器而不是网络
     private String audioText;       //音频文本
-    private int audioPartId;        //分段的音频id，音频总时长最多为5min，因此audioPartId的范围是1-5
+    private List<Integer> audioPartEndTime;        //音频各部分的开始时间，其列表的下表即音频的分段编号，列表长度即切割成的段数，暂时的段数设为3段
 
     public String getAudioId() {
         return audioId;
@@ -60,12 +63,13 @@ public class Audio extends EModel{
         this.audioText = audioText;
     }
 
-    public int getAudioPartId() {
-        return audioPartId;
+
+    public List<Integer> getAudioPartEndTime() {
+        return audioPartEndTime;
     }
 
-    public void setAudioPartId(int audioPartId) {
-        this.audioPartId = audioPartId;
+    public void setAudioPartEndTime(ArrayList<Integer> audioPartEndTime) {
+        this.audioPartEndTime = audioPartEndTime;
     }
 
 }

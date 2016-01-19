@@ -27,4 +27,5 @@ dependencies {
     compile project(':elifecore')
     compile project(':elifemodel')
     compile files('libs/volley.jar')
+    compile project(':PullToRefresh')
 }

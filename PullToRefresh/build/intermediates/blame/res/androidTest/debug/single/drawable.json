@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/pengpeng/AndroidStudioProjects/ELifeApplication/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_bottom.xml",
+        "source": "/home/pengpeng/AndroidStudioProjects/ELifeApplication/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_bottom.xml"
+    },
+    {
+        "merged": "/home/pengpeng/AndroidStudioProjects/ELifeApplication/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_top.xml",
+        "source": "/home/pengpeng/AndroidStudioProjects/ELifeApplication/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_top.xml"
+    }
+]
