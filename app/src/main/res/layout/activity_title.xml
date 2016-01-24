@@ -2,23 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/titleLinearLayout"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="50dp"
     android:background="#4dd0c8"
     android:gravity="center"
     android:orientation="horizontal" >
 
     <ImageButton
         android:id="@+id/back"
-        android:layout_width="40dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center"
         android:background="@drawable/back" />
 
     <TextView
-        android:layout_height="40dp"
-       	android:layout_width="fill_parent"
-       	android:textSize="20dp"
+        android:id="@+id/title"
+        android:layout_height="match_parent"
+       	android:layout_width="match_parent"
+       	android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
         android:gravity="center"
-        android:text="Network Music" />
+        android:maxLines="1"
+        android:ellipsize="middle"
+        android:text="@string/app_name" />
 
 </LinearLayout>

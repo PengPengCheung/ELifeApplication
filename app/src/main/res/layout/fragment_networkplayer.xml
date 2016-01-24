@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/start"
+    android:id="@+id/network_player_layout">
 
     
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/seekBarLayout"
-        android:layout_below="@+id/titleLinearLayout" >
-
-        <TextView
-            android:id="@+id/songWord"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="hhh" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
+        android:id="@+id/layout_network_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/seekBarLayout" >
 
-        <ImageView
-            android:id="@+id/classification"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/classification"
-            android:scaleType="centerCrop" />
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/network_player_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/start" />
 
-        <ImageView
-            android:id="@+id/exercise"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/exercise"
-            android:scaleType="centerInside" />
+        <!--<TextView-->
+            <!--android:id="@+id/songWord"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:text="hhh" />-->
     </RelativeLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:layout_above="@+id/seekBarLayout" >-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/classification"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:background="@drawable/classification"-->
+            <!--android:scaleType="centerCrop" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/exercise"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@drawable/exercise"-->
+            <!--android:scaleType="centerInside" />-->
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/seekBarLayout"
@@ -78,8 +86,10 @@
         android:id="@+id/icon"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
-        android:layout_above="@+id/txt"
+    android:layout_above="@+id/txt"
         android:gravity="center" >
+        <!--android:layout_height="80dp"-->
+
 
         <ImageButton
             android:id="@+id/preButton"
@@ -109,12 +119,12 @@
         android:layout_height="30dp"
         android:layout_alignParentBottom="true" >
 
-        <ImageButton
-            android:id="@+id/txt_change"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/txt_hide" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/txt_change"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@drawable/txt_hide" />-->
     </RelativeLayout>
 
     <RelativeLayout

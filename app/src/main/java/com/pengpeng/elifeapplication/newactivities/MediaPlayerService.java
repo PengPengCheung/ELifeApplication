@@ -1,4 +1,4 @@
-package com.pengpeng.elifeapplication.oldactivities;
+package com.pengpeng.elifeapplication.newactivities;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.pengpeng.elifeapplication.R;
-import com.pengpeng.elifeapplication.newactivities.NetworkAudioPlayerActivity;
 
 public class MediaPlayerService extends Service implements MediaPlayer.OnPreparedListener {
     public static final int NOTIFICATION_ID = 1;

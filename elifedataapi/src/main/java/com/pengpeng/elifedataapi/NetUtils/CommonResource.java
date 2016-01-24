@@ -5,8 +5,10 @@ package com.pengpeng.elifedataapi.NetUtils;
  */
 public final class CommonResource {
     public static final class Path{
-        public static final String serverPath = "http://192.168.235.8:8000/";
-        public static final String testPath = serverPath+"test";
+        public static final String serverPath = "http://192.168.235.33:8000/";
+//        public static final String testPath = "http://192.168.235.33:8000/getAudio";//丽璇的data的数据类型是list而不是对象！！！！
+        public static final String testPath = serverPath+"getAudio";
+        public static final String audioListPath = serverPath+"showLists/";
     }
 
     public static final class Event{

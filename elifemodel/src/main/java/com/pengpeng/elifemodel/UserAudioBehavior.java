@@ -6,9 +6,34 @@ package com.pengpeng.elifemodel;
 public class UserAudioBehavior extends EModel{
 
     private String audioId;
-    private String userUUID;
-    private int isGood;             //是否点赞，1表示点赞，0表示不点赞
-    private String userAnswer;      //用户的练习答案
+    private String userId;
+    private Boolean isCollected;             //是否点赞，True表示点赞，False表示不点赞
+    private String userAnswer;          //用户的练习答案
+    private float audioCorrectRate;
+
+    public Boolean getIsCollected() {
+        return isCollected;
+    }
+
+    public void setIsCollected(Boolean isCollected) {
+        this.isCollected = isCollected;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public float getAudioCorrectRate() {
+        return audioCorrectRate;
+    }
+
+    public void setAudioCorrectRate(float audioCorrectRate) {
+        this.audioCorrectRate = audioCorrectRate;
+    }
 
     public String getAudioId() {
         return audioId;
@@ -16,22 +41,6 @@ public class UserAudioBehavior extends EModel{
 
     public void setAudioId(String audioId) {
         this.audioId = audioId;
-    }
-
-    public String getUserUUID() {
-        return userUUID;
-    }
-
-    public void setUserUUID(String userUUID) {
-        this.userUUID = userUUID;
-    }
-
-    public int getIsGood() {
-        return isGood;
-    }
-
-    public void setIsGood(int isGood) {
-        this.isGood = isGood;
     }
 
     public String getUserAnswer() {

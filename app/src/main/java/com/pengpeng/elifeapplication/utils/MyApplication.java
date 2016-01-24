@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 public class MyApplication extends Application{
     private static RequestQueue requestQueue;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -20,4 +21,5 @@ public class MyApplication extends Application{
     public static RequestQueue getRequestQueue(){
         return requestQueue;
     }
+
 }

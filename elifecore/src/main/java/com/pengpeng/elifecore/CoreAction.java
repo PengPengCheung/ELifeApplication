@@ -13,14 +13,14 @@ public interface CoreAction {
      * @param userUUID 用户手机标识号
      * @return 通过手机标识号获取的某一用户的音频列表，返回前端显示
      */
-    public List<Audio> getAudioList(String userUUID);
+    public void getAudioList(String userUUID, ResponseCallbackListener<List<Audio>> listener);
 
     /**
      *
      * @param uaBehavior  用户与音频的行为模型，主要用于传递手机标识号和用户在主页点击的音频的id
      * @return  对应id的音频
      */
-    public void getAudio(UserAudioBehavior uaBehavior, ResponseCallbackListener listener);
+    public void getAudio(UserAudioBehavior uaBehavior, ResponseCallbackListener<Audio> listener);
 
     /**
      *

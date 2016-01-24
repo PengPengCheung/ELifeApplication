@@ -17,6 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.pengpeng.elifeapplication.R;
+import com.pengpeng.elifeapplication.newactivities.MediaPlayerService;
 
 /*
 * 1、前台的服务点击进去之后跳转到activity，但不重新create (fixed)

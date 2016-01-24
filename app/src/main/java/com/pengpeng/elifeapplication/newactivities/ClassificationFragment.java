@@ -16,11 +16,13 @@ import com.pengpeng.elifeapplication.R;
 public class ClassificationFragment extends Fragment implements View.OnClickListener{
 
     private View view;
+    private ImageButton part1;
     private ImageButton part2;
+    private ImageButton part3;
     private onPartDividedListener pdListener;
 
     public interface onPartDividedListener{
-        public void onPartDivided(Bundle bundle);
+         void onPartDivided(Bundle bundle);
     }
 
     @Override
@@ -39,11 +41,15 @@ public class ClassificationFragment extends Fragment implements View.OnClickList
     }
 
     private void initView() {
+        part1 = (ImageButton)view.findViewById(R.id.part1);
         part2 = (ImageButton)view.findViewById(R.id.part2);
+        part3 = (ImageButton)view.findViewById(R.id.part3);
     }
 
     public void setListener(){
+        part1.setOnClickListener(this);
         part2.setOnClickListener(this);
+        part3.setOnClickListener(this);
     }
 
 
@@ -56,13 +62,19 @@ public class ClassificationFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Bundle b = new Bundle();
         switch (view.getId()) {
             case R.id.part2:
-                Bundle b = new Bundle();
                 b.putInt("part", 2);
-                pdListener.onPartDivided(b);
-                ((NetworkAudioPlayerActivity)getActivity()).getViewPager().setCurrentItem(1);
+                break;
+            case R.id.part1:
+                b.putInt("part", 1);
+                break;
+            case R.id.part3:
+                b.putInt("part", 3);
                 break;
         }
+        pdListener.onPartDivided(b);
+        ((NetworkAudioPlayerActivity)getActivity()).getViewPager().setCurrentItem(1);
     }
 }

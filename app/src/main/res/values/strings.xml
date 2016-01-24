@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">ELifeApplication</string>
+    <string name="app_name">ELife</string>
     <string name="title_activity_network_player">NetworkPlayerActivity</string>
     <string name="title_activity_net_work_audio_player">NetWorkAudioPlayerActivity</string>
     <string name="title_activity_audio_list">AudioListActivity</string>
+    <string name="title_activity_exercise">ExerciseActivity</string>
 </resources>

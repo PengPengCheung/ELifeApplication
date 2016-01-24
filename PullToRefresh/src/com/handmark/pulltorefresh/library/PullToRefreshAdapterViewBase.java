@@ -399,6 +399,14 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		return false;
 	}
 
+	public boolean isHeaderShown() {
+		return getHeaderLayout().isShown();
+	}
+
+	public boolean isFooterShown() {
+		return getFooterLayout().isShown();
+	}
+
 	private boolean isLastItemVisible() {
 		final Adapter adapter = mRefreshableView.getAdapter();
 

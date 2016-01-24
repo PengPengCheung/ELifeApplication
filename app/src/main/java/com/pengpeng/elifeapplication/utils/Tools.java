@@ -76,6 +76,7 @@ public class Tools {
         if (time < 0) {
             return "time wrong";
         }
+
         int totalSeconds = time / 1000;
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;

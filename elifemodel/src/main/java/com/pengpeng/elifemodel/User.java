@@ -4,13 +4,13 @@ package com.pengpeng.elifemodel;
  * Created by pengpeng on 16-1-12.
  */
 public class User extends EModel{
-    private String userUUID;
+    private String userId;
 
-    public String getUserUUID() {
-        return userUUID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserUUID(String userUUID) {
-        this.userUUID = userUUID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

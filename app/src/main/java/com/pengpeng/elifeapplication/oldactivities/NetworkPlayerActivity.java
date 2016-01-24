@@ -13,6 +13,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.pengpeng.elifeapplication.R;
+import com.pengpeng.elifeapplication.newactivities.MediaPlayerService;
+import com.pengpeng.elifeapplication.newactivities.NetworkAudioPlayer;
 import com.pengpeng.elifeapplication.utils.Tools;
 
 

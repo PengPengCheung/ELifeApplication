@@ -1,9 +1,10 @@
-package com.pengpeng.elifeapplication.oldactivities;
+package com.pengpeng.elifeapplication.newactivities;
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
+import com.pengpeng.elifeapplication.oldactivities.IAudioPlayer;
 import com.pengpeng.elifeapplication.utils.Tools;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by pengpeng on 15-12-8.
  */
-public class NetworkAudioPlayer extends MediaPlayer implements IAudioPlayer{
+public class NetworkAudioPlayer extends MediaPlayer implements IAudioPlayer {
 
     private Context context;
     private boolean paused = false;
